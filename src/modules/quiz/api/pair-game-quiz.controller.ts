@@ -9,6 +9,8 @@ import {
   Post,
   Query,
   UseGuards,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/modules/user-accounts/guards/bearer/jwt-auth.guard';
 import { ExtractUserFromRequest } from 'src/modules/user-accounts/guards/decorators/param/extract-user-from-request.decorator';
@@ -27,6 +29,9 @@ import { PlayerProgressQueryRepository } from '../infrastructure/query/player-pr
 import { ConnectOrCreatePairCommand } from '../application/usecases/games/connect-or-create-pair.usecase';
 import { PaginatedViewDto } from 'src/core/dto/base.paginated.view-dto';
 import { GetMyGamesQueryParams } from '../dto/game-pair-quiz/get-my-games-query-params.input-dto';
+import { SortValidationTransformationPipe } from 'src/core/pipes/sort-validation-transformation-pipe';
+import { GetTopStatisticQueryParams } from '../dto/game-pair-quiz/get-top-statistic-query-params.input-dto';
+import { StatisticTopViewDto } from '../dto/game-pair-quiz/statistic-top-view.dto';
 
 @Controller('pair-game-quiz')
 export class PairGameQuizController {
@@ -86,11 +91,22 @@ export class PairGameQuizController {
   async getMyStatistic(
     @ExtractUserFromRequest() user: UserContextDto,
   ): Promise<StatisticViewDto> {
-    // console.log(88888888, '=======================================', user.id);
-
     return await this.playerProgressQueryRepository.getStatisticByUserId(
       user.id,
     );
+  }
+
+  @Get('users/top')
+  @HttpCode(HttpStatus.OK)
+  async getAllUsersStatistic(
+    @Query()
+    query: GetTopStatisticQueryParams,
+  ): Promise<PaginatedViewDto<StatisticTopViewDto[]>> {
+    const ss = await this.playerProgressQueryRepository.getTopStatistic(query);
+
+    console.log(7777, ss);
+
+    return ss;
   }
 
   @Get('pairs/my')

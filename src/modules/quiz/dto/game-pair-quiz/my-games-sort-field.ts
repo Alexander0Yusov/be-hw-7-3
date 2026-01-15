@@ -4,9 +4,3 @@ export enum MyGamesSortField {
   FinishGameDate = 'finishGameDate',
   Status = 'status',
 }
-
-// export enum PublishedStatus {
-//   All = 'all',
-//   Published = 'published',
-//   NotPublished = 'notPublished',
-// }

@@ -49,11 +49,20 @@ export function pipesSetup(app: INestApplication) {
       //class-transformer создает экземпляр dto
       //соответственно применятся значения по-умолчанию
       //и методы классов dto
+      // включает class-transformer
       transform: true,
 
+      // игнорирует лишние поля
       whitelist: true,
+
+      // выбрасывает ошибку при лишних полях
+      // forbidNonWhitelisted: true,
+
       //Выдавать первую ошибку для каждого поля
       stopAtFirstError: true,
+
+      // transformOptions: { enableImplicitConversion: true },
+
       //Для преобразования ошибок класс валидатора в необходимый вид
       exceptionFactory: (errors) => {
         const formattedErrors = errorFormatter(errors);

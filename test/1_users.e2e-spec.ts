@@ -346,4 +346,12 @@ describe('users (e2e)', () => {
       .auth(accessToken_1, { type: 'bearer' })
       .expect(HttpStatus.BAD_REQUEST);
   });
+
+  it('should return top statistics', async () => {
+    await request(app.getHttpServer())
+      .get(
+        `/${GLOBAL_PREFIX}/pair-game-quiz/users/top?sort=avgScores desc&sort=sumScore desc`,
+      )
+      .expect(HttpStatus.OK);
+  });
 });
