@@ -102,11 +102,7 @@ export class PairGameQuizController {
     @Query()
     query: GetTopStatisticQueryParams,
   ): Promise<PaginatedViewDto<StatisticTopViewDto[]>> {
-    const ss = await this.playerProgressQueryRepository.getTopStatistic(query);
-
-    console.log(7777, ss);
-
-    return ss;
+    return await this.playerProgressQueryRepository.getTopStatistic(query);
   }
 
   @Get('pairs/my')

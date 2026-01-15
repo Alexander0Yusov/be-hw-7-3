@@ -51,8 +51,6 @@ export class PlayerProgressQueryRepository {
 
     stats.avgScores = Math.round(stats.avgScores * 100) / 100;
 
-    // console.log(77777, stats);
-
     return stats;
   }
 
